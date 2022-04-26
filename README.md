@@ -1,0 +1,2 @@
+# 16299ObstacleAvoidingRobot
+For this project, we are implementing obstacle avoiding mobile robot. The user is able to input a position(x, y), and the robot can reach the goal even when there are obstacles in the way. The mobile robot uses two IR sensors and one ultrasonic sensor for perception, and encoders for localization. We integrated PID control into our encoder calculation to increase the localization accuracy. 
