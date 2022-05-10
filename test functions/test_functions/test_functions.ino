@@ -67,6 +67,5 @@ void loop()
 ////      Serial.println("avoid");
 //      Function.Obstacle_Avoid(v);
 //    }
-
     
 }
