@@ -67,11 +67,11 @@ void loop()
   }
 
   else if (robot_motion == 1){
-    theta += dt*omega;
+    theta = theta + dt*omega;
   }
 
   else if (robot_motion == 2){
-    theta -= dt*omega;
+    theta = theta - dt*omega;
   }
 
   // check whether goal is reached
