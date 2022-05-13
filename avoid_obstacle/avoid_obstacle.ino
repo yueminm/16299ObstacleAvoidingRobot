@@ -45,8 +45,9 @@ int move_body_length = 0;
 int robot_motion = 0; // 0 for straight, 1 for left, 2 for right
 
 // set PID gains
-float P_gain = 0.98;
-float I_gain = 0.33;
+float P_gain = 0.97;
+float I_gain = 0.08;
+float theta_error = 0;
 
 void setup() 
 {
@@ -62,16 +63,22 @@ void loop()
   time_cur = millis();
   float dt = time_cur - time_prev;
   if (robot_motion == 0) {
+    theta_error = theta_error + theta*dt;
+    theta = theta*P_gain + theta_error*I_gain;
     x = x + dt*v*v_scale*cos(theta);
     y = y + dt*v*v_scale*sin(theta);
   }
 
   else if (robot_motion == 1){
     theta = theta + dt*omega;
+    theta_error = theta_error + theta*dt;
+    theta = theta*P_gain + theta_error*I_gain;
   }
 
   else if (robot_motion == 2){
     theta = theta - dt*omega;
+    theta_error = theta_error + theta*dt;
+    theta = theta*P_gain + theta_error*I_gain;
   }
 
   // check whether goal is reached
@@ -94,12 +101,12 @@ void loop()
     if (theta_turn >= 0) {
       Motor.Left(v);
       delay(t_turn);
-      theta += t_turn*omega;
+      theta = theta + t_turn*omega;
     }
     else {
       Motor.Right(v);
       delay(t_turn);
-      theta -= t_turn*omega;
+      theta = theta - t_turn*omega;
     }
 
     // go straight
